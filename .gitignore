@@ -1,0 +1,23 @@
+## --- Python virtual env ---
+.venv/
+venv/
+env/
+
+# --- Jupyter ---
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+
+# --- OS noise ---
+.DS_Store
+
+# --- Python caches ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# --- Logs ---
+*.log
+
+# VSCode Jupyter virtual documents
+**/.virtual_documents/
