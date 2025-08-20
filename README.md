@@ -57,11 +57,36 @@ and provide operational insights for improving scheduling efficiency.
 
 ---
 
+### 3. No-show by Demographics (`03_demographic_analysis.ipynb`)
+- Created **age groups**: Child (0–12), Teen (13–18), Young Adult (19–30), Adult (31–45), Middle Age (46–60), Senior (60+)
+- Grouped by **AgeGroup × Gender**
+- Aggregated appointments, no-shows, and no-show rate
+- Visualized both line chart and grouped bar chart
+
+**Artifacts**
+- `data/processed/demographic_noshow_summary.csv`
+- `assets/no_show_rate_by_age_gender.png`
+- `assets/no_show_rate_by_age_gender_bar.png`
+
+**Preview**
+_Line Chart (trend by age group and gender)_  
+![](assets/no_show_rate_by_age_gender.png)
+
+_Grouped Bar Chart (direct male/female comparison)_  
+![](assets/no_show_rate_by_age_gender_bar.png)
+
+**Key Insight**
+- **Teens (13–18) and Young Adults (19–30)** show the **highest no-show rates**.  
+- Seniors (60+) show the **lowest no-show rate**.  
+- Gender differences exist but are relatively small; males sometimes show slightly higher no-show rates.  
+- **Action Suggestion**: For younger groups (19–30), targeted digital reminders or flexible scheduling could reduce no-shows.
+
+---
+
 ## 📊 Next Steps
-- Analyze no-show rates by **age group** and **gender**
-- Assess the impact of **SMS reminders** on attendance
-- Build a **cross-analysis (Weekday × Lead Time)** for deeper operational insights
-- Summarize findings into a **dashboard-style report with KPIs**
+- Assess the impact of **SMS reminders** on attendance  
+- Explore interaction effects (e.g., Weekday × Lead Time × Demographics)  
+- Summarize insights into a **dashboard-style presentation**  
 
 ---
 
