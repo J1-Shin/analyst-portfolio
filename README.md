@@ -14,6 +14,14 @@ and provide operational insights for improving scheduling efficiency.
 
 ---
 
+## 🔑 Key Takeaways (TL;DR)
+- **Weekday Effect**: No-shows spike on certain weekdays (e.g., Monday/Friday)  
+- **Lead Time Effect**: Longer scheduling gaps → higher no-show risk  
+- **Demographics**: Young adults (19–30) most likely to miss appointments; seniors least likely  
+- **SMS Reminders**: Alone, not effective — likely targeted at high-risk groups  
+
+---
+
 ## 🗂️ Analysis Steps
 
 ### 1. No-show by Weekday (`01_eda.ipynb`)
@@ -83,10 +91,59 @@ _Grouped Bar Chart (direct male/female comparison)_
 
 ---
 
+### 4. SMS Reminder Effect (`04_sms_analysis.ipynb`)
+
+We analyzed whether receiving an SMS reminder influences the no-show rate.
+
+#### 4.1 Overall Effect
+- Grouped by SMS_received (0 = No SMS, 1 = SMS Sent)
+- Compared overall appointment volume, no-shows, and no-show rate
+
+**Artifacts**
+- `data/processed/sms_noshow_summary.csv`
+- `assets/no_show_rate_by_sms.png`
+
+**Preview**
+![](assets/no_show_rate_by_sms.png)
+
+**Key Insight**
+- Patients who **received an SMS had a *higher* no-show rate (27.6%) compared to those who did not receive one (16.7%)**.  
+- This counter-intuitive result suggests that SMS reminders may have been targeted toward patients already considered at higher risk of no-shows.  
+- **Action Suggestion**: SMS alone may not be sufficient; consider multi-channel reminders (e.g., phone calls, mobile app push).
+
+---
+
+#### 4.2 SMS Effect by Age Group
+- Grouped by AgeGroup × SMS_received
+- Compared how SMS impacted no-show rates across different demographics
+
+**Artifacts**
+- `data/processed/age_sms_summary.csv`
+- `assets/no_show_rate_by_age_sms.png`
+
+**Preview**
+![](assets/no_show_rate_by_age_sms.png)
+
+**Key Insight**
+- SMS reminders were **more frequently sent to younger groups** (e.g., Young Adults 19–30), who also naturally exhibit higher no-show rates.  
+- Seniors (60+) showed low no-show rates regardless of SMS.  
+- This indicates a **selection bias**: SMS was not randomly assigned but likely targeted at groups with historically higher no-show risk.  
+- **Action Suggestion**: Instead of blanket SMS campaigns, hospitals could benefit from **age-tailored reminder strategies** (e.g., stronger digital reminders for young adults, phone call follow-ups for middle-aged groups).
+
+---
+
 ## 📊 Next Steps
-- Assess the impact of **SMS reminders** on attendance  
-- Explore interaction effects (e.g., Weekday × Lead Time × Demographics)  
-- Summarize insights into a **dashboard-style presentation**  
+1. **Interaction Analysis**
+   - Combine variables (e.g., Weekday × Lead Time, Age × SMS) to identify compounding risk factors  
+
+2. **Predictive Modeling**
+   - Logistic Regression or Random Forest to estimate patient-level no-show probability  
+
+3. **Cost Impact Simulation**
+   - Estimate how many staff hours / costs could be saved by reducing no-shows by X%  
+
+4. **Operational Dashboard**
+   - Build a simple dashboard (e.g., Streamlit) so hospital staff can interact with findings 
 
 ---
 
@@ -101,15 +158,21 @@ _Grouped Bar Chart (direct male/female comparison)_
 healthcare-no_show/
 │
 ├── data/
-│ ├── raw/ <- Original dataset (Kaggle CSV)
-│ ├── processed/ <- Processed summaries
+│   ├── raw/                <- Original dataset (Kaggle CSV)
+│   ├── processed/          <- Processed summaries (weekday, leadtime, demographic, sms)
 │
 ├── notebooks/
-│ ├── 01_eda.ipynb
-│ ├── 02_leadtime_analysis.ipynb
+│   ├── 01_eda.ipynb
+│   ├── 02_leadtime_analysis.ipynb
+│   ├── 03_demographic_analysis.ipynb
+│   ├── 04_sms_analysis.ipynb
 │
-├── assets/ <- Visualization outputs
-│ ├── no_show_rate_by_weekday.png
-│ ├── no_show_rate_by_leadtime.png
+├── assets/                 <- Visualization outputs
+│   ├── no_show_rate_by_weekday.png
+│   ├── no_show_rate_by_leadtime.png
+│   ├── no_show_rate_by_age_gender.png
+│   ├── no_show_rate_by_age_gender_bar.png
+│   ├── no_show_rate_by_sms.png
+│   ├── no_show_rate_by_age_sms.png
 │
 └── README.md
