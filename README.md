@@ -132,18 +132,27 @@ We analyzed whether receiving an SMS reminder influences the no-show rate.
 
 ---
 
+### 5. Modeling Prep (`05_model_prep.ipynb`)
+We prepared features and split the dataset for modeling.
+
+**Feature Engineering**
+- `LeadTime` (days) from `AppointmentDay - ScheduledDay` (cleaned: negative removed, >60 capped)
+- `GenderNum` (F=0, M=1)
+- `AppointmentWeekday` one-hot encoded (drop-first)
+- Target: `NoShow` (Yes=1, No=0)
+
+**Train/Test Split**
+- 80/20 random split with `stratify=y` (keeps class ratio consistent)
+- `random_state=42` for reproducibility
+
+**Artifacts**
+- `data/processed/train_model_prep.csv`
+- `data/processed/test_model_prep.csv`
+
+
 ## 📊 Next Steps
-1. **Interaction Analysis**
-   - Combine variables (e.g., Weekday × Lead Time, Age × SMS) to identify compounding risk factors  
+- Train a baseline model (Logistic Regression), evaluate (Accuracy, ROC-AUC), and inspect feature importance.
 
-2. **Predictive Modeling**
-   - Logistic Regression or Random Forest to estimate patient-level no-show probability  
-
-3. **Cost Impact Simulation**
-   - Estimate how many staff hours / costs could be saved by reducing no-shows by X%  
-
-4. **Operational Dashboard**
-   - Build a simple dashboard (e.g., Streamlit) so hospital staff can interact with findings 
 
 ---
 
@@ -160,12 +169,19 @@ healthcare-no_show/
 ├── data/
 │   ├── raw/                <- Original dataset (Kaggle CSV)
 │   ├── processed/          <- Processed summaries (weekday, leadtime, demographic, sms)
-│
+│   │   ├── weekday_noshow_summary.csv
+│   │   ├── leadtime_noshow_summary.csv
+│   │   ├── demographic_noshow_summary.csv
+│   │   ├── sms_noshow_summary.csv
+│   │   ├── age_sms_summary.csv
+│   │   ├── train_model_prep.csv
+│   │   └── test_model_prep.csv
 ├── notebooks/
 │   ├── 01_eda.ipynb
 │   ├── 02_leadtime_analysis.ipynb
 │   ├── 03_demographic_analysis.ipynb
 │   ├── 04_sms_analysis.ipynb
+│   └── 05_model_prep.ipynb
 │
 ├── assets/                 <- Visualization outputs
 │   ├── no_show_rate_by_weekday.png
