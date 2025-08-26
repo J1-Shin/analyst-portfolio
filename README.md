@@ -149,9 +149,59 @@ We prepared features and split the dataset for modeling.
 - `data/processed/train_model_prep.csv`
 - `data/processed/test_model_prep.csv`
 
+---
+
+### 6. Logistic Regression (`06_logistic_regression.ipynb`)
+We trained a logistic regression model to predict patient no-shows.
+
+#### 6.1 Baseline Model (Unbalanced)
+- **Accuracy**: ~0.71
+- **Recall (NoShow=1)**: Near 0 (fails to detect actual no-shows)
+- **Insight**: The model is biased towards predicting "Show" due to class imbalance (~72% show rate).
+
+#### 6.2 With Class Weight Balanced
+We retrained using `class_weight='balanced'` to address class imbalance.
+
+
+- **Accuracy**: ~0.55 (lower, but expected)
+- **Recall (NoShow=1)**: Improved significantly (detects more no-shows)
+- **ROC-AUC**: ~0.58 (slightly better overall discrimination)
+- **Confusion Matrix** shows a clear reduction in **False Negatives**.
+
+**Key Insight**
+- High accuracy on imbalanced data is misleading.
+- Balancing the classes improves the model's **ability to detect no-shows**, which is critical for operational use.
+
+**Artifacts**
+- `assets/logistic_regression_roc.png`
+- `assets/logistic_regression_coefficients.csv`(balanced)
+
+---
 
 ## 📊 Next Steps
-- Train a baseline model (Logistic Regression), evaluate (Accuracy, ROC-AUC), and inspect feature importance.
+
+1. **Handle Class Imbalance More Effectively**
+   - Apply **SMOTE (Synthetic Minority Oversampling Technique)** to generate synthetic no-show examples.
+   - Compare oversampling vs. undersampling vs. class weighting.
+
+2. **Try Tree-Based Models**
+   - Use **RandomForestClassifier** and **XGBoost** to capture nonlinear relationships.
+   - Evaluate feature importances to understand complex interactions.
+
+3. **Hyperparameter Tuning**
+   - Perform cross-validation and grid search to optimize parameters for Logistic Regression and tree models.
+
+4. **Enhanced Feature Engineering**
+   - Add interaction features (e.g., `LeadTime x Weekday`, `SMS_received x AgeGroup`).
+   - Consider time-of-day, previous visits, or geographic distance if available.
+
+5. **Evaluate with Robust Metrics**
+   - Focus on **Recall (NoShow=1)** and **Precision-Recall AUC** to better measure effectiveness in no-show detection.
+   - Cost-sensitive evaluation: weigh the cost of missing a no-show vs. false alarms.
+
+6. **Deployment Consideration**
+   - Prepare a pipeline to retrain and update the model regularly as new data arrives.
+   - Consider integration into hospital scheduling systems for real-time decision support.
 
 
 ---
@@ -159,8 +209,7 @@ We prepared features and split the dataset for modeling.
 ## ⚙️ Environment
 - Python 3.12  
 - Libraries: pandas, numpy, matplotlib, jupyter  
-- Virtual environment: `.venv` (see `requirements.txt`)  
-
+- Virtual environment: `.venv`
 ---
 
 ## 📁 Project Structure

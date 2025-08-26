@@ -1,0 +1,10 @@
+Feature,Coefficient
+SMS_received,-0.17547119254466292
+AppointmentWeekday_Wednesday,-0.07483580035808882
+AppointmentWeekday_Thursday,-0.07188216080717562
+GenderNum,-0.048956171953481904
+AppointmentWeekday_Monday,0.048887311534372466
+AppointmentWeekday_Tuesday,0.02555060543514945
+LeadTime,0.011023622452054148
+Age,-0.010221596100984198
+AppointmentWeekday_Saturday,0.008622530161926979
